@@ -1,0 +1,38 @@
+package dev.habiburrahman.mvvmsimplecrud.utils
+
+object Constant {
+
+    const val SUCCESS = "success"
+    const val MESSAGE = "message"
+    const val TITLE = "title"
+    const val LEFT_BUTTON = "left_button"
+    const val RIGHT_BUTTON = "right_button"
+    const val PATH = "path"
+    const val DATA = "data"
+    const val ID = "id"
+    const val EMAIL = "email"
+    const val UPDATE_AT = "updated_at"
+    const val CREATED_AT = "created_at"
+    const val TOKEN = "token"
+    const val SKU = "sku"
+    const val PRODUCT_NAME = "product_name"
+    const val QTY = "qty"
+    const val PRICE = "price"
+    const val UNIT = "unit"
+    const val STATUS = "status"
+    const val PASSWORD = "password"
+    const val ERROR = "error"
+    const val IMAGE = "image"
+    const val ADD = "add"
+    const val UPDATE = "update"
+    const val DELETE = "delete"
+    const val SEARCH = "search"
+    const val DIALOG_TYPE = "dialog_type"
+    const val LOGIN_DIALOG = "login_dialog"
+    const val REGISTER_DIALOG = "register_dialog"
+    const val CRUD_DIALOG = "crud_dialog"
+    const val NOTICE_DIALOG = "notice_dialog"
+    const val STOCK_DETAIL_DIALOG = "stock_detail_dialog"
+    const val STOCK = "stock"
+
+}

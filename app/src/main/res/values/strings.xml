@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MVVM Simple CRUD</string>
+    <string name="t_user">User</string>
+    <string name="t_register_account">Register Account</string>
+    <string name="t_close">Tutup</string>
+    <string name="t_register">Register</string>
+    <string name="t_login_account">Login Account</string>
+    <string name="t_login">Login</string>
+    <string name="t_cannot_be_empty">Kolom Tidak Boleh Kosong</string>
+    <string name="t_add_stock_item">Tambah Stok Barang</string>
+    <string name="t_add">Tambah</string>
+    <string name="t_update_stock_item">Update Stok Barang</string>
+    <string name="t_update">Update</string>
+    <string name="t_colon">:</string>
+    <string name="t_fab_add_stock_desc">Add Stock Action Button</string>
+</resources>
