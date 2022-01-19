@@ -1,9 +1,9 @@
 package dev.habiburrahman.mvvmsimplecrud.utils.handler
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.button.MaterialButton
@@ -12,7 +12,6 @@ import dev.habiburrahman.mvvmsimplecrud.databinding.CustomDialogDetailStockBindi
 import dev.habiburrahman.mvvmsimplecrud.databinding.CustomDialogNoticeBinding
 import dev.habiburrahman.mvvmsimplecrud.databinding.CustomDialogRequestCredentialBinding
 import dev.habiburrahman.mvvmsimplecrud.models.local.DialogDataModel
-import dev.habiburrahman.mvvmsimplecrud.utils.Constant.ADD
 import dev.habiburrahman.mvvmsimplecrud.utils.Constant.CRUD_DIALOG
 import dev.habiburrahman.mvvmsimplecrud.utils.Constant.LOGIN_DIALOG
 import dev.habiburrahman.mvvmsimplecrud.utils.Constant.NOTICE_DIALOG
@@ -23,15 +22,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class CustomDialogHandler(
-    inputDataDialog: DialogDataModel,
     inputListener: AlertDialogObjectListener,
+    inputDataDialog: DialogDataModel,
+    inputViewGroup: ViewGroup
 ) : AppCompatDialogFragment() {
 
     private val listener by lazy { inputListener }
     private val dialogData by lazy { inputDataDialog }
+    private val parent by lazy { inputViewGroup }
     private lateinit var alertDialog: AlertDialog
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    override fun onPause() {
+        super.onPause()
+        this.dismissAllowingStateLoss()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val inflater by lazy { requireActivity().layoutInflater }
         val rootView by lazy {
             when (dialogData.dialogTypeValue) {
@@ -39,7 +45,7 @@ class CustomDialogHandler(
                 CRUD_DIALOG -> showCrudStockItemDialog(inflater)
                 NOTICE_DIALOG -> showNoticeDialog(inflater)
                 STOCK_DETAIL_DIALOG -> showStockDetailDialog(inflater)
-                else -> throw IllegalStateException("Unknown Dialog Type")
+                else -> null
             }
         }
         alertDialog = requireActivity().let {
@@ -52,7 +58,7 @@ class CustomDialogHandler(
     }
 
     private fun showInputCredentialDialog(inputInflater: LayoutInflater): View {
-        return CustomDialogRequestCredentialBinding.inflate(inputInflater)
+        return CustomDialogRequestCredentialBinding.inflate(inputInflater, parent, false)
             .apply {
                 mtvDialogTitle.text = dialogData.titleValue
                 mBtnClose.text = dialogData.leftButtonTextValue
@@ -62,7 +68,7 @@ class CustomDialogHandler(
     }
 
     private fun showCrudStockItemDialog(inputInflater: LayoutInflater): View {
-        return CustomDialogCrudStockItemBinding.inflate(inputInflater)
+        return CustomDialogCrudStockItemBinding.inflate(inputInflater, parent, false)
             .apply {
                 runBlocking {
                     when (dialogData.pathValue) {
@@ -90,7 +96,7 @@ class CustomDialogHandler(
     }
 
     private fun showNoticeDialog(inputInflater: LayoutInflater): View {
-        return CustomDialogNoticeBinding.inflate(inputInflater).apply {
+        return CustomDialogNoticeBinding.inflate(inputInflater, parent, false).apply {
             mtvNotificationTitle.text = dialogData.titleValue
             mtvNotificationBody.text = dialogData.bodyValue
             mBtnClose.text = dialogData.leftButtonTextValue
@@ -101,7 +107,7 @@ class CustomDialogHandler(
     }
 
     private fun showStockDetailDialog(inputInflater: LayoutInflater): View {
-        return CustomDialogDetailStockBinding.inflate(inputInflater).apply {
+        return CustomDialogDetailStockBinding.inflate(inputInflater, parent, false).apply {
             mtvDialogDetailStockProductNameValue.text = dialogData.stockData?.productNameValue
             mtvDialogDetailStockSkuValue.text = dialogData.stockData?.skuValue
             mtvDialogDetailStockQtyValue.text = dialogData.stockData?.qtyValue

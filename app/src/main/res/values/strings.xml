@@ -13,4 +13,7 @@
     <string name="t_update">Update</string>
     <string name="t_colon">:</string>
     <string name="t_fab_add_stock_desc">Add Stock Action Button</string>
+    <string name="t_notice">Notice</string>
+    <string name="t_notice_body_default_value">You just had rotate the screen before close the dialog</string>
+    <string name="t_confirm">Confirm</string>
 </resources>

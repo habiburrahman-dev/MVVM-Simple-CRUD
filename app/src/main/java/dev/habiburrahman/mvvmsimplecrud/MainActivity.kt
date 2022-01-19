@@ -1,5 +1,6 @@
 package dev.habiburrahman.mvvmsimplecrud
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -40,10 +41,10 @@ class MainActivity : AppCompatActivity(), CustomDialogHandler.AlertDialogObjectL
     // late init collection
     private lateinit var binding: ActivityMainBinding
     private lateinit var appViewModel: AppViewModel
-    private lateinit var customDialogHandler: CustomDialogHandler
     private lateinit var setDialogData: DialogDataModel
     private lateinit var mPref: AppSharedPreference
     private lateinit var mAdapter: CustomRecyclerAdapter
+    private lateinit var customDialogHandler: CustomDialogHandler
 
     private var listCollection = ListCollectionModel()
 
@@ -357,18 +358,35 @@ class MainActivity : AppCompatActivity(), CustomDialogHandler.AlertDialogObjectL
         launch {
             customDialogHandler = CustomDialogHandler(
                 inputDataDialog = setDialogData,
-                inputListener = this@MainActivity
-            ).apply {
+                inputListener = this@MainActivity,
+                inputViewGroup = binding.root
+            )/*.newInstance(
+                inputDataDialog = setDialogData,
+                inputListener = this@MainActivity,
+                inputViewGroup = binding.root
+            )*/.apply {
                 isCancelable = false
                 show(supportFragmentManager, setDialogData.dialogTypeValue)
             }
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show()
+            customDialogHandler.dismiss()
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
+            customDialogHandler.dismiss()
+        }
+    }
+
     override fun onDialogObjectListener(
         inputView: View,
         inputAlertDialog: AlertDialog,
-        inputDialogData: DialogDataModel,
+        inputDialogData: DialogDataModel
     ) {
         when (inputView.id) {
             R.id.m_btn_close -> inputAlertDialog.dismiss()
